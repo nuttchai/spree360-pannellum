@@ -5,8 +5,13 @@ import TestBox from "./partials/TestBox";
 export default function App() {
   return (
     <div className="App">
-      <h1>CPM 360</h1>
-
+      <div style={{ paddingTop: "12px" }}>
+        <img
+          src={require("./assets/rentspree-icon.svg")}
+          alt="rentspree logo"
+          height={60}
+        />
+      </div>
       <TestBox />
     </div>
   );

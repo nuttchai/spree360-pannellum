@@ -3,7 +3,14 @@ import * as React from "react";
 import scenesArray from "./ScenesArray";
 import Grid from "@material-ui/core/Grid";
 import ImageMapper from "react-image-mapper";
+import { useReducer } from "react";
 
+function setMapColor(map, newArea) {
+  map.areas.forEach((area) => {
+    area.preFillColor = newArea == area.name ? "green" : "red";
+  });
+  return map;
+}
 function TestBox(props) {
   const [currentScene, setCurrentScene] = React.useState(0);
   const [imgCoords, setImgCoords] = React.useState(0);
@@ -12,248 +19,106 @@ function TestBox(props) {
   const [sceneImg, setSceneImg] = React.useState(
     scenesArray[currentScene].scenePanoImg
   );
+  const [ignored, forceUpdate] = useReducer((x) => x + 1, 0);
+
+  const [map, setMap] = React.useState({
+    name: "my-map",
+    areas: [
+      {
+        name: "0",
+        shape: "circle",
+        coords: [325, 46, 5],
+        preFillColor: "green",
+      },
+      {
+        name: "1",
+        shape: "circle",
+        coords: [334, 70, 5],
+        preFillColor: "red",
+      },
+      {
+        name: "2",
+        shape: "circle",
+        coords: [300, 46, 5],
+        preFillColor: "red",
+      },
+      {
+        name: "3",
+        shape: "circle",
+        coords: [310, 65, 5],
+        preFillColor: "red",
+      },
+      {
+        name: "4",
+        shape: "circle",
+        coords: [310, 85, 5],
+        preFillColor: "red",
+      },
+      {
+        name: "5",
+        shape: "circle",
+        coords: [334, 96, 5],
+        preFillColor: "red",
+      },
+    ],
+  });
+
   const panImage = React.useRef(null);
   const hotspotIcon = (hotSpotDiv) => {
     const image = document.createElement("img");
     image.classList.add("image");
     image.setAttribute("width", "30");
     image.setAttribute("height", "30");
-    image.setAttribute(
-      "src",
-      "https://img.icons8.com/material/4ac144/256/camera.png"
-    );
+    image.setAttribute("src", require("../assets/navigator.png"));
     hotSpotDiv.appendChild(image);
   };
-  const map = {
-    name: "my-map",
-    areas: [
-      {
-        name: "7",
-        shape: "circle",
-        coords: [150, 112, 5],
-        preFillColor: "red"
-      },
-      {
-        name: "8",
-        shape: "circle",
-        coords: [147, 138, 5],
-        preFillColor: "red"
-      },
-      {
-        name: "9",
-        shape: "circle",
-        coords: [143, 153, 5],
-        preFillColor: "red"
-      },
-      {
-        name: "10",
-        shape: "circle",
-        coords: [148, 196, 5],
-        preFillColor: "red"
-      },
-      {
-        name: "5",
-        shape: "circle",
-        coords: [163, 145, 5],
-        preFillColor: "red"
-      },
-      {
-        name: "6",
-        shape: "circle",
-        coords: [188, 103, 5],
-        preFillColor: "red"
-      },
-      {
-        name: "12",
-        shape: "circle",
-        coords: [185, 184, 5],
-        preFillColor: "red"
-      },
-      {
-        name: "13",
-        shape: "circle",
-        coords: [189, 223, 5],
-        preFillColor: "red"
-      },
-      {
-        name: "0",
-        shape: "circle",
-        coords: [221, 66, 5],
-        preFillColor: "red"
-      },
-      {
-        name: "1",
-        shape: "circle",
-        coords: [214, 91, 5],
-        preFillColor: "red"
-      },
-      {
-        name: "2",
-        shape: "circle",
-        coords: [222, 114, 5],
-        preFillColor: "red"
-      },
-      {
-        name: "3",
-        shape: "circle",
-        coords: [215, 129, 5],
-        preFillColor: "red"
-      },
-      {
-        name: "4",
-        shape: "circle",
-        coords: [212, 146, 5],
-        preFillColor: "red"
-      },
-      {
-        name: "11",
-        shape: "circle",
-        coords: [212, 171, 5],
-        preFillColor: "red"
-      },
-      {
-        name: "15",
-        shape: "circle",
-        coords: [231, 172, 5],
-        preFillColor: "red"
-      },
-      {
-        name: "14",
-        shape: "circle",
-        coords: [222, 208, 5],
-        preFillColor: "red"
-      },
-      {
-        name: "31",
-        shape: "circle",
-        coords: [270, 80, 5],
-        preFillColor: "red"
-      },
-      {
-        name: "30",
-        shape: "circle",
-        coords: [270, 118, 5],
-        preFillColor: "red"
-      },
-      {
-        name: "16",
-        shape: "circle",
-        coords: [269, 146, 5],
-        preFillColor: "red"
-      },
-      {
-        name: "18",
-        shape: "circle",
-        coords: [257, 172, 5],
-        preFillColor: "red"
-      },
-      {
-        name: "17",
-        shape: "circle",
-        coords: [274, 170, 5],
-        preFillColor: "red"
-      },
-      {
-        name: "19",
-        shape: "circle",
-        coords: [261, 205, 5],
-        preFillColor: "red"
-      },
-      {
-        name: "20",
-        shape: "circle",
-        coords: [304, 189, 5],
-        preFillColor: "red"
-      },
-      {
-        name: "21",
-        shape: "circle",
-        coords: [297, 224, 5],
-        preFillColor: "red"
-      },
-      {
-        name: "29",
-        shape: "circle",
-        coords: [300, 104, 5],
-        preFillColor: "red"
-      },
-      {
-        name: "22",
-        shape: "circle",
-        coords: [305, 147, 5],
-        preFillColor: "red"
-      },
-      {
-        name: "28",
-        shape: "circle",
-        coords: [340, 77, 5],
-        preFillColor: "red"
-      },
-      {
-        name: "27",
-        shape: "circle",
-        coords: [335, 112, 5],
-        preFillColor: "red"
-      },
-      {
-        name: "26",
-        shape: "circle",
-        coords: [340, 151, 5],
-        preFillColor: "red"
-      },
-      {
-        name: "23",
-        shape: "circle",
-        coords: [325, 161, 5],
-        preFillColor: "red"
-      },
-      {
-        name: "25",
-        shape: "circle",
-        coords: [340, 165, 5],
-        preFillColor: "red"
-      },
-      {
-        name: "24",
-        shape: "circle",
-        coords: [335, 201, 5],
-        preFillColor: "red"
-      }
-    ]
-  };
+  console.log("render");
 
   return (
     <>
       <Grid container spacing={3}>
-        <Grid item xs={6}>
-          <div>{imgCoords}</div>
-          <ImageMapper
-            src={
-              "https://fridayphotos.s3.eu-central-1.amazonaws.com/dot_map.png"
-            }
-            width={700}
-            onImageClick={(evt) =>
-              setImgCoords("" + evt.pageX + ", " + evt.pageY)
-            }
-            onClick={(area) => setCurrentScene(parseInt(area.name))}
-            map={map}
-          />
+        <Grid item xs={1}>
+          <div
+            style={{
+              position: "absolute",
+              bottom: "0",
+              left: "0",
+            }}
+          >
+            {/* <div>{imgCoords}</div> */}
+            <ImageMapper
+              src={
+                "https://fridayphotos.s3.eu-central-1.amazonaws.com/dot_map.png"
+              }
+              width={400}
+              onImageClick={(evt) =>
+                setImgCoords("" + evt.pageX + ", " + evt.pageY)
+              }
+              onClick={(area) => {
+                setCurrentScene(parseInt(area.name));
+                setMap(setMapColor(map, area.name));
+              }}
+              map={map}
+            />
+          </div>
         </Grid>
-        <Grid item xs={6}>
-          <div>
+        <Grid item xs={12}>
+          {/* <div>
             {" "}
             pitch: {pitch}, yaw: {yaw}, transition: "0"{" "}
-          </div>
+          </div> */}
           <Pannellum
             ref={panImage}
             width="100%"
-            height="500px"
-            image={scenesArray[currentScene].scenePanoImg + "?resize=800%2C600"}
-            pitch={10}
-            yaw={180}
-            hfov={110}
+            height="86vh"
+            image={
+              scenesArray[currentScene].scenePanoImg + "?resize=1200%2C600"
+            }
+            pitch={0}
+            yaw={0}
+            hfov={135}
             autoLoad
-            showZoomCtrl={false}
+            showZoomCtrl
             onMouseup={(event) => {
               setPitch(
                 panImage.current.getViewer().mouseEventToCoords(event)[0]
@@ -268,9 +133,11 @@ function TestBox(props) {
                   pitch={hotSpot.pitch}
                   yaw={hotSpot.yaw}
                   tooltip={hotspotIcon}
-                  handleClick={(evt, name) =>
-                    setCurrentScene(hotSpot.transition)
-                  }
+                  handleClick={(evt, name) => {
+                    setCurrentScene(hotSpot.transition);
+                    setMap(setMapColor(map, hotSpot.transition));
+                    forceUpdate();
+                  }}
                   name="image info"
                 />
               );

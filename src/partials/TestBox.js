@@ -7,7 +7,7 @@ import { useReducer } from "react";
 
 function setMapColor(map, newArea) {
   map.areas.forEach((area) => {
-    area.preFillColor = newArea == area.name ? "green" : "red";
+    area.preFillColor = newArea === area.name ? "green" : "red";
   });
   return map;
 }

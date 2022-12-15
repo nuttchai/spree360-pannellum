@@ -7,7 +7,7 @@ export default function App() {
     <div className="App">
       <div style={{ paddingTop: "12px" }}>
         <img
-          src={require("./assets/rentspree-icon.svg")}
+          src={require("./assets/rentspree-icon.png")}
           alt="rentspree logo"
           height={60}
         />

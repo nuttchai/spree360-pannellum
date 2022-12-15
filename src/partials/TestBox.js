@@ -72,7 +72,6 @@ function TestBox(props) {
     image.setAttribute("src", require("../assets/navigator.png"));
     hotSpotDiv.appendChild(image);
   };
-  console.log("render");
 
   return (
     <>
